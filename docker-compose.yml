@@ -4,7 +4,7 @@ services:
   web:
     build: .
     ports:
-     - "8080:80"  # Cambiado a 8080:80 para evitar conflictos con otros servicios
+     - "8080:80"  
     volumes:
      - .:/app
     environment:
