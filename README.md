@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Modelo de Predicción Médica
 
-## Getting Started
+Este repositorio contiene una solución para la predicción de diagnósticos médicos basada en síntomas del paciente. La aplicación está compuesta por un backend (API) y un frontend (interfaz web).
 
-First, run the development server:
+## Implementación Local
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Para implementar la aplicación de forma local, es necesario desplegar tanto el backend como el frontend en ese orden.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Despliegue del Backend (API)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+#### Construcción de la imagen Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Ubíquese en la carpeta raíz del proyecto:
+   ```bash
+   cd cdk-fargate-deploy-python-fastapi
+   ```
 
-## Learn More
+2. Construya la imagen Docker:
+   ```bash
+   docker build -t myimage .
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+#### Ejecución del contenedor
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Inicie el contenedor:
+   ```bash
+   docker run -d --name mycontainer -p 80:80 myimage
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Una vez en ejecución, puede acceder a la documentación de la API en:
+   ```
+   http://127.0.0.1/docs
+   ```
+   Aquí encontrará todos los endpoints disponibles.
 
-## Deploy on Vercel
+### 2. Despliegue del Frontend (Interfaz Web)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Construcción de la imagen Docker
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Construya la imagen Docker del frontend:
+   ```bash
+   docker build --build-arg NEXT_PUBLIC_API_URL=http://127.0.0.1 -t nextjs-app .
+   ```
+
+#### Ejecución del contenedor
+
+1. Inicie el contenedor:
+   ```bash
+   docker run -p 8080:80 nextjs-app
+   ```
+
+2. Acceda a la interfaz web en:
+   ```
+   http://localhost:8080
+   ```
+
+## Uso de la Aplicación
+
+### Interfaz Local
+
+1. Abra la aplicación en su navegador: `http://localhost:8080`
+2. Complete el formulario con la información del paciente:
+   - Llene la información básica requerida
+   - Ingrese al menos 5 síntomas
+3. Haga clic en el botón "Generar Predicción" en la parte inferior
+4. Visualice los resultados de la predicción en el panel izquierdo
+
+## Versión en Línea
+
+Si dispone de conexión a internet, puede acceder a la versión desplegada de la aplicación:
+
+### Frontend (Interfaz Web)
+- URL: [https://pwa5h9m5vf.execute-api.us-east-1.amazonaws.com/](https://pwa5h9m5vf.execute-api.us-east-1.amazonaws.com/)
+- Uso: Complete el formulario como se indica en las instrucciones locales
+
+### Backend (API)
+- Documentación de la API: [https://g6ag2ls1c7.execute-api.us-east-1.amazonaws.com/docs#](https://g6ag2ls1c7.execute-api.us-east-1.amazonaws.com/docs#)
