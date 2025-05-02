@@ -1,0 +1,29 @@
+# Archivos de construcción
+.next
+out
+build
+dist
+
+# Logs
+logs
+*.log
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de desarrollo y pruebas
+coverage
+.coverage
+.nyc_output
+jest.config.js
+.prettierrc
+.eslintrc
+.editorconfig
+README.md
+LICENSE
+*.md
+*.test.js
+*.spec.js
+test
+tests

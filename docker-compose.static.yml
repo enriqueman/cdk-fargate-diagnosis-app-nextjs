@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  nextjs-static:
+    container_name: nextjs-static
+    build:
+      context: .
+      dockerfile: Dockerfile.static
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - app-network
+
+# Define una red para la aplicación
+networks:
+  app-network:
+    driver: bridge
